@@ -21,6 +21,9 @@ public class Reserva {
     @JoinColumn(name = "pasajero_id", referencedColumnName = "pasajero_id")
     private Pasajero pasajero;
 
+    @OneToOne (mappedBy = "reserva", cascade =  CascadeType.ALL, fetch = FetchType.EAGER)
+    private Pasaje pasaje;
+
     @Column(name = "estado_reserva_id")
     private Integer estadoReservaId;
 

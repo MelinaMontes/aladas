@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.*;
 
 import ar.com.ada.api.aladas.entities.*;
+import ar.com.ada.api.aladas.entities.Pais.PaisEnum;
+import ar.com.ada.api.aladas.entities.Pais.TipoDocuEnum;
 
 @MappedSuperclass
 public abstract class Persona {
@@ -61,6 +63,5 @@ public abstract class Persona {
     public void setPaisId(PaisEnum paisId) {
         this.paisId = paisId.getValue();
     }
-
 
 }

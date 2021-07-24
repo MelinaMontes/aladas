@@ -27,4 +27,30 @@ public class Pais {
             return status;
         }
     }
+
+    public enum TipoDocuEnum {
+        DNI(1), PASAPORTE(2);
+
+        private final Integer value;
+
+        private TipoDocuEnum(Integer value) {
+            this.value = value;
+        }
+
+        public Integer getValue() {
+            return value;
+        }
+    }
+
+    public static TipoDocuEnum parse(Integer id) {
+        TipoDocuEnum status = null;
+        for (TipoDocuEnum item : TipoDocuEnum.values()) {
+            if (item.getValue().equals(id)) {
+                status = item;
+                break;
+            }
+        }
+        return status;
+
+    }
 }
