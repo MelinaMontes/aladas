@@ -40,17 +40,17 @@ public class Pais {
         public Integer getValue() {
             return value;
         }
-    }
 
-    public static TipoDocuEnum parse(Integer id) {
-        TipoDocuEnum status = null;
-        for (TipoDocuEnum item : TipoDocuEnum.values()) {
-            if (item.getValue().equals(id)) {
-                status = item;
-                break;
+        public static TipoDocuEnum parse(Integer id) {
+            TipoDocuEnum status = null;
+            for (TipoDocuEnum item : TipoDocuEnum.values()) {
+                if (item.getValue().equals(id)) {
+                    status = item;
+                    break;
+                }
             }
-        }
-        return status;
+            return status;
 
+        }
     }
 }
