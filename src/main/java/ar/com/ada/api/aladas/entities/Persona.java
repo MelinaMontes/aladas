@@ -4,9 +4,7 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-import ar.com.ada.api.aladas.entities.*;
-import ar.com.ada.api.aladas.entities.Pais.PaisEnum;
-import ar.com.ada.api.aladas.entities.Pais.TipoDocuEnum;
+import ar.com.ada.api.aladas.entities.Pais.*;
 
 @MappedSuperclass
 public abstract class Persona {

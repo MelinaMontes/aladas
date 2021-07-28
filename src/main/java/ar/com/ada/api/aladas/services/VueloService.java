@@ -52,6 +52,12 @@ public class VueloService {
         
         if(!validarAeropuertoOrigenDifDestino(vuelo))
             return ValidacionVueloDataEnum.ERROR_MISMO_AEROPUERTO;
+         //ver si esta bien
+        if(!validarFecha(vuelo))
+            return ValidacionVueloDataEnum.ERROR_FECHA;    
+
+       // if (!validarCapacidadMinima(vuelo))
+            //return ValidacionVueloDataEnum.ERROR_CAPACIDAD_MINIMA;
         
         return ValidacionVueloDataEnum.OK;    
     }
@@ -71,6 +77,11 @@ public class VueloService {
     public boolean validarAeropuertoOrigenDifDestino (Vuelo vuelo){
         return vuelo.getAeropuertoDestino() != vuelo.getAeropuertoOrigen();
     }
+     // chequear 
+    public boolean validarFecha(Vuelo vuelo){
+        return vuelo.getFecha() != vuelo.getFecha();
+    }
+    //public boolean validarCapacidadMinima(Vuelo vuelo){}
 
     public enum ValidacionVueloDataEnum{
         OK, ERROR_PRECIO, ERROR_MISMO_AEROPUERTO, ERROR_AEROPUERTO_ORIGEN, ERROR_AEROPUERTO_DESTINO, ERROR_FECHA, ERROR_MONEDA, ERROR_CAPACIDAD_MINIMA, ERROR_CAPACIDAD_MAXIMA, ERROR_GENERAL
