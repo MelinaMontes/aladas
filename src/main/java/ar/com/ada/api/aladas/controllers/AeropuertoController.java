@@ -18,6 +18,7 @@ public class AeropuertoController {
     public ResponseEntity <GenericResponse> crear(@RequestBody Aeropuerto aeropuerto){
 
         GenericResponse respuesta = new GenericResponse();
+        
         service.crear(aeropuerto.getAeropuertoId(), aeropuerto.getNombre(), aeropuerto.getCodigoIATA());
 
         respuesta.isOk = true;
