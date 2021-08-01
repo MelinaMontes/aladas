@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ar.com.ada.api.aladas.entities.Aeropuerto;
 import ar.com.ada.api.aladas.entities.Vuelo;
+import ar.com.ada.api.aladas.entities.Vuelo.EstadoVueloEnum;
 import ar.com.ada.api.aladas.repos.VueloRepository;
 
 @Service
@@ -19,19 +20,22 @@ public class VueloService {
     @Autowired
     private AeropuertoService aeroService;
 
-    public void crear(Vuelo vuelo){
+    public void crear(Vuelo vuelo) {
+
+        vuelo.setEstadoVueloId(EstadoVueloEnum.GENERADO);
         repo.save(vuelo);
-        
+
     }
 
-    public Vuelo crear(Date fecha, Integer capacidad, String aeropuertoOrigenIATA, String aeropuertoDestinoIATA, BigDecimal precio, String codigoMoneda){
+    public Vuelo crear(Date fecha, Integer capacidad, String aeropuertoOrigenIATA, String aeropuertoDestinoIATA,
+            BigDecimal precio, String codigoMoneda) {
 
         Vuelo vuelo = new Vuelo();
         vuelo.setFecha(fecha);
         vuelo.setCapacidad(capacidad);
 
         Aeropuerto aeropuertoOrigen = aeroService.buscarPorCodigoIATA(aeropuertoOrigenIATA);
-        
+
         Aeropuerto aeropuertoDestino = aeroService.buscarPorCodigoIATA(aeropuertoDestinoIATA);
 
         vuelo.setAeropuertoOrigen(aeropuertoOrigen.getAeropuertoId());
@@ -40,50 +44,51 @@ public class VueloService {
         vuelo.setPrecio(precio);
         vuelo.setCodigoMoneda(codigoMoneda);
 
-        repo.save(vuelo);
+        crear(vuelo);
         return vuelo;
 
     }
 
-    public ValidacionVueloDataEnum validar(Vuelo vuelo){
+    public ValidacionVueloDataEnum validar(Vuelo vuelo) {
 
-        if(!validarPrecio(vuelo))
+        if (!validarPrecio(vuelo))
             return ValidacionVueloDataEnum.ERROR_PRECIO;
-        
-        if(!validarAeropuertoOrigenDifDestino(vuelo))
+
+        if (!validarAeropuertoOrigenDifDestino(vuelo))
             return ValidacionVueloDataEnum.ERROR_MISMO_AEROPUERTO;
-         //ver si esta bien
-        if(!validarFecha(vuelo))
-            return ValidacionVueloDataEnum.ERROR_FECHA;    
+        // ver si esta bien
+        if (!validarFecha(vuelo))
+            return ValidacionVueloDataEnum.ERROR_FECHA;
 
-       // if (!validarCapacidadMinima(vuelo))
-            //return ValidacionVueloDataEnum.ERROR_CAPACIDAD_MINIMA;
-        
-        return ValidacionVueloDataEnum.OK;    
+        // if (!validarCapacidadMinima(vuelo))
+        // return ValidacionVueloDataEnum.ERROR_CAPACIDAD_MINIMA;
+
+        return ValidacionVueloDataEnum.OK;
     }
-    
 
-    public boolean validarPrecio(Vuelo vuelo){
+    public boolean validarPrecio(Vuelo vuelo) {
 
-        if(vuelo.getPrecio()==null){
+        if (vuelo.getPrecio() == null) {
             return false;
         }
-        if(vuelo.getPrecio().doubleValue()< 0)
+        if (vuelo.getPrecio().doubleValue() > 0)
             return true;
 
         return false;
     }
 
-    public boolean validarAeropuertoOrigenDifDestino (Vuelo vuelo){
+    public boolean validarAeropuertoOrigenDifDestino(Vuelo vuelo) {
         return vuelo.getAeropuertoDestino() != vuelo.getAeropuertoOrigen();
     }
-     // chequear 
-    public boolean validarFecha(Vuelo vuelo){
+
+    // chequear
+    public boolean validarFecha(Vuelo vuelo) {
         return vuelo.getFecha() != vuelo.getFecha();
     }
-    //public boolean validarCapacidadMinima(Vuelo vuelo){}
+    // public boolean validarCapacidadMinima(Vuelo vuelo){}
 
-    public enum ValidacionVueloDataEnum{
-        OK, ERROR_PRECIO, ERROR_MISMO_AEROPUERTO, ERROR_AEROPUERTO_ORIGEN, ERROR_AEROPUERTO_DESTINO, ERROR_FECHA, ERROR_MONEDA, ERROR_CAPACIDAD_MINIMA, ERROR_CAPACIDAD_MAXIMA, ERROR_GENERAL
+    public enum ValidacionVueloDataEnum {
+        OK, ERROR_PRECIO, ERROR_MISMO_AEROPUERTO, ERROR_AEROPUERTO_ORIGEN, ERROR_AEROPUERTO_DESTINO, ERROR_FECHA,
+        ERROR_MONEDA, ERROR_CAPACIDAD_MINIMA, ERROR_CAPACIDAD_MAXIMA, ERROR_GENERAL
     }
 }
