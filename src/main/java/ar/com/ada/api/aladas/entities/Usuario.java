@@ -12,7 +12,7 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "ususario_id")
+    @Column (name = "usuario_id")
     private Integer UsuarioId;
 
     @NaturalId
@@ -25,7 +25,7 @@ public class Usuario {
     @Column (name = "fecha_login")
     private Date fechaLogin;
 
-    @Column (name = " tipo_usuario")
+    @Column (name = " tipo_usuario_id")
     private Integer tipoUsuario;
 
     @OneToOne

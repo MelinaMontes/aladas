@@ -55,8 +55,8 @@ public class Vuelo {
         return EstadoVueloEnum.parse(estadoVueloId);
     }
 
-    public void setEstadoVueloId(EstadoVueloEnum estadoVueloId) {
-        this.estadoVueloId = estadoVueloId.getValue();
+    public void setEstadoVueloId(EstadoVueloEnum generado) {
+        this.estadoVueloId = generado.getValue();
     }
 
     public Integer getCapacidad() {
