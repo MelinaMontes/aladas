@@ -51,14 +51,15 @@ public class VueloController {
 
     @PutMapping("/api/vuelos/{id}/estados")
     public ResponseEntity<GenericResponse> actualizar(@PathVariable Integer id,
-            @RequestBody NuevoEstadoVuelo nuevoEstadoVuelo) {
+            @RequestBody NuevoEstadoVuelo EstadoVuelo) {
 
         GenericResponse respuesta = new GenericResponse();
 
-        respuesta.isOk = true;
         Vuelo vuelo = service.buscarPorId(id);
-        vuelo.setEstadoVueloId(nuevoEstadoVuelo.estado);
+        vuelo.setEstadoVueloId(EstadoVuelo.estado);
+        service.actualizar(vuelo);
 
+        respuesta.isOk = true;
         respuesta.message = "Estado del vuelo modificado";
 
         return ResponseEntity.ok(respuesta);
