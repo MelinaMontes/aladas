@@ -12,8 +12,8 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "usuario_id")
-    private Integer UsuarioId;
+    @Column(name = "usuario_id")
+    private Integer usuarioId;
 
     @NaturalId
     private String username;
@@ -22,51 +22,26 @@ public class Usuario {
 
     private String email;
 
-    @Column (name = "fecha_login")
+    @Column(name = "fecha_login")
     private Date fechaLogin;
 
-    @Column (name = " tipo_usuario_id")
+    @Column(name = "tipo_usuario_id")
     private Integer tipoUsuario;
 
     @OneToOne
-    @JoinColumn (name = "staff_id", referencedColumnName = "staff_id")
+    @JoinColumn(name = "staff_id", referencedColumnName = "staff_id")
     private Staff staff;
 
     @OneToOne
     @JoinColumn(name = "pasajero_id", referencedColumnName = "pasajero_id")
     private Pasajero pasajero;
 
-    public enum TipoUsuarioEnum {
-        STAFF(1) , PASAJERO(2);
-
-        private final Integer value;
-
-        private TipoUsuarioEnum (Integer value) {
-            this.value = value;
-        }
-        public Integer getValue() {
-            return value;
-        }
-
-        public static TipoUsuarioEnum parse(Integer id) { 
-            TipoUsuarioEnum status = null;
-            for (TipoUsuarioEnum item : TipoUsuarioEnum.values()) {
-                if (item.getValue().equals (id)) {
-                    status = item;
-                    break;
-                }
-
-            }
-            return status;
-        }
-    }
-
     public Integer getUsuarioId() {
-        return UsuarioId;
+        return usuarioId;
     }
 
     public void setUsuarioId(Integer usuarioId) {
-        UsuarioId = usuarioId;
+        this.usuarioId = usuarioId;
     }
 
     public String getUsername() {
@@ -101,8 +76,8 @@ public class Usuario {
         this.fechaLogin = fechaLogin;
     }
 
-    public Integer getTipoUsuario() {
-        return tipoUsuario;
+    public TipoUsuarioEnum getTipoUsuario() {
+        return TipoUsuarioEnum.parse(this.tipoUsuario);
     }
 
     public void setTipoUsuario(TipoUsuarioEnum tipoUsuario) {
@@ -123,8 +98,38 @@ public class Usuario {
 
     public void setPasajero(Pasajero pasajero) {
         this.pasajero = pasajero;
+
     }
-    
-    
-    
+
+    public Integer obtenerEntityId() {
+        // TODO, segun el tipo de usuario, devolver el pasajeroId o staffId o nada!
+        return null;
+    }
+
+    public enum TipoUsuarioEnum {
+        STAFF(1), PASAJERO(2);
+
+        private final Integer value;
+
+        // NOTE: Enum constructor tiene que estar en privado
+        private TipoUsuarioEnum(Integer value) {
+            this.value = value;
+        }
+
+        public Integer getValue() {
+            return value;
+        }
+
+        public static TipoUsuarioEnum parse(Integer id) {
+            TipoUsuarioEnum status = null; // Default
+            for (TipoUsuarioEnum item : TipoUsuarioEnum.values()) {
+                if (item.getValue().equals(id)) {
+                    status = item;
+                    break;
+                }
+            }
+            return status;
+        }
+    }
+
 }
