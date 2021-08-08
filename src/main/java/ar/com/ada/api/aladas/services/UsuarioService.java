@@ -49,6 +49,14 @@ public class UsuarioService {
   public Usuario crearUsuario(TipoUsuarioEnum tipoUsuario, String nombre, int pais, int tipoDocumento, String documento,
        String email, String password) {
 
+         Usuario usuario = new Usuario();
+
+         usuario.setTipoUsuario(tipoUsuario);
+         usuario.setPassword(password);
+
+         usuario.setEmail(email);
+         
+
     // Todo!
     return null;
   }
