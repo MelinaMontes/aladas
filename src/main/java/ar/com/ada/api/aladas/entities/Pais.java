@@ -3,7 +3,7 @@ package ar.com.ada.api.aladas.entities;
 public class Pais {
 
     public enum PaisEnum {
-        ARGENTINA(32), ESTADOS_UNIDOS(840), VENEZUELA(862), COLOMBIA(170);
+        ARGENTINA(32),BRASIL(76), FRANCIA(250), ARUBA(533), PORTUGAL(620), ESPAÑA(724), ESTADOS_UNIDOS(840), VENEZUELA(862), COLOMBIA(170), SUIZA(756);
 
         private final Integer value;
 
