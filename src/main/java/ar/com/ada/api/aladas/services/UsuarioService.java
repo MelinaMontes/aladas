@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import ar.com.ada.api.aladas.entities.*;
+import ar.com.ada.api.aladas.entities.Pais.PaisEnum;
+import ar.com.ada.api.aladas.entities.Pais.TipoDocuEnum;
 import ar.com.ada.api.aladas.entities.Usuario.TipoUsuarioEnum;
 import ar.com.ada.api.aladas.repos.UsuarioRepository;
 import ar.com.ada.api.aladas.security.Crypto;
@@ -19,10 +21,12 @@ import ar.com.ada.api.aladas.security.Crypto;
 @Service
 public class UsuarioService {
 
-  // @Autowired
-  // PasajeroService pasajeroService;
-  // @Autowired
-  // StaffService staffService;
+  @Autowired
+  PasajeroService pasajeroService;
+
+  @Autowired
+  StaffService staffService;
+
   @Autowired
   UsuarioRepository usuarioRepository;
 
@@ -38,7 +42,7 @@ public class UsuarioService {
 
     Usuario u = buscarPorUsername(username);
 
-    if (u == null || !u.getPassword().equals(Crypto.encrypt(password, u.getUsername()))) {
+    if (u == null || !u.getPassword().equals(Crypto.encrypt(password, u.getEmail().toLowerCase()))) {
 
       throw new BadCredentialsException("Usuario o contraseña invalida");
     }
@@ -46,19 +50,41 @@ public class UsuarioService {
     return u;
   }
 
-  public Usuario crearUsuario(TipoUsuarioEnum tipoUsuario, String nombre, int pais, int tipoDocumento, String documento,
-       String email, String password) {
+  public Usuario crearUsuario(TipoUsuarioEnum tipoUsuario, String nombre, int pais, Date fechaNacimiento,
+      TipoDocuEnum tipoDocumento, String documento, String email, String password) {
 
-         Usuario usuario = new Usuario();
+    Usuario usuario = new Usuario();
+    usuario.setUsername(email);
+    usuario.setEmail(email);
+    usuario.setPassword(Crypto.encrypt(password, email.toLowerCase()));
+    usuario.setTipoUsuario(tipoUsuario);
 
-         usuario.setTipoUsuario(tipoUsuario);
-         usuario.setPassword(password);
+    if (tipoUsuario == TipoUsuarioEnum.PASAJERO) {
+      Pasajero pasajero = new Pasajero();
 
-         usuario.setEmail(email);
-         
+      pasajero.setDocumento(documento);
+      pasajero.setPaisId(PaisEnum.parse(pais));
+      pasajero.setFechaNacimiento(fechaNacimiento);
+      pasajero.setNombre(nombre);
+      pasajero.setTipoDocumentoId(tipoDocumento);
+      pasajero.setUsuario(usuario);
 
-    // Todo!
-    return null;
+      pasajeroService.crear(pasajero);
+
+    } else {
+
+      Staff staff = new Staff();
+      staff.setDocumento(documento);
+      staff.setPaisId(PaisEnum.parse(pais));
+      staff.setFechaNacimiento(fechaNacimiento);
+      staff.setNombre(nombre);
+      staff.setTipoDocumentoId(tipoDocumento);
+      staff.setUsuario(usuario);
+
+      staffService.crearStaff(staff);
+    }
+    
+    return usuario;
   }
 
   public Usuario buscarPorEmail(String email) {

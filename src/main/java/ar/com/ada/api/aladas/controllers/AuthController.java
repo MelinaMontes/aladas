@@ -19,18 +19,12 @@ import ar.com.ada.api.aladas.security.jwt.JWTTokenUtil;
 import ar.com.ada.api.aladas.services.JWTUserDetailsService;
 import ar.com.ada.api.aladas.services.UsuarioService;;
 
-/**
- * AuthController
- */
 @RestController
 public class AuthController {
 
     @Autowired
     UsuarioService usuarioService;
 
-    /*
-     * @Autowired private AuthenticationManager authenticationManager;
-     */
     @Autowired
     private JWTTokenUtil jwtTokenUtil;
 
@@ -41,12 +35,11 @@ public class AuthController {
     @PostMapping("api/auth/register")
     public ResponseEntity<RegistrationResponse> postRegisterUser(@RequestBody RegistrationRequest req,
             BindingResult results) {
+
         RegistrationResponse r = new RegistrationResponse();
-
+        
         // aca creamos la persona y el usuario a traves del service.
-
-        Usuario usuario = usuarioService.crearUsuario(req.userType, req.fullName, req.country, req.identificationType,
-                req.identification,  req.email, req.password);
+        Usuario usuario = usuarioService.crearUsuario(req.userType, req.fullName, req.country, req.birthDate, req.identificationType, req.identification, req.email, req.password);
 
         r.isOk = true;
         r.message = "Te registraste con exitoooo!!!!!!!";
