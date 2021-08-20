@@ -29,7 +29,7 @@ public class ReservaService {
         Reserva reserva = new Reserva();
 
         Vuelo vuelo = vueloService.buscarPorId(vueloId);
-        reserva.setFechaEmision((new Date()));
+        reserva.setFechaEmision(new Date());
 
         Calendar c = Calendar.getInstance();
         c.setTime(reserva.getFechaEmision());
@@ -45,6 +45,10 @@ public class ReservaService {
 
         repo.save(reserva);
         return reserva.getReservaId();
+    }
+
+    public Reserva buscarPorId(Integer id){
+        return repo.findByReservaId(id);
     }
 
 
