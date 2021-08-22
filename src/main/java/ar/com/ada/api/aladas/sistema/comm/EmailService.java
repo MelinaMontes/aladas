@@ -38,7 +38,7 @@ public class EmailService {
             return;
 
         JsonNode r;
-        HttpResponse<JsonNode> request = Unirest.post("https://api.mailgun.net/v3/" + this.domain + "/messages")
+        HttpResponse<JsonNode> request = Unirest.post("https://api.mailgun.net/v3/sandbox7589c87026914b9bae20222cbc4cc7db.mailgun.org/messages")
                 .basicAuth("api", this.apiKey)
                 .field("from", this.from)
                 .field("to", email)          //toda esta info se guarda en la variable request
