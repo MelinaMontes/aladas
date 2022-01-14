@@ -1,4 +1,14 @@
-# aladas
+# Aladas
 
-Proyecto de tipo API REST para venta online de pasajes de avion.
-Esta api permite registrar y loguear usuarios de tipo pasajero o staff brindando un token el cual es el acceso para entrar a las distintas funcionalidades, tambien nos va a generar una reserva y un vuelo a partir de distintos aeropuertos. Se encuentra desplegada aca: https://backendairlines.herokuapp.com/aeropuertos
+Proyecto de tipo REST para venta de tickets aéreos.
+Sus principales recursos son registrar y loguear usuarios, de tipo Staff o Pasajero.
+El Staff podra obtener informacion de los vuelos, del estado de cada uno de estos y acceder a informacion mas detallada. El Pasajero podra buscar vuelos, reservar y obtener un pasaje. 
+
+**Tecnologias utilizadas en el Backend:**
+
+**Java 11 || SpringBoot || MySQL**
+
+**Deploy:**
+
+https://backendairlines.herokuapp.com/aeropuertos
+
