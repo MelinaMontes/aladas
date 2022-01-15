@@ -6,7 +6,7 @@ El Staff podra obtener informacion de los vuelos, del estado de cada uno de esto
 
 **Tecnologias utilizadas en el Backend:**
 
-**Java 11 || SpringBoot || MySQL**
+**Java 11 || SpringBoot || PostgreSQL
 
 **Deploy:**
 
